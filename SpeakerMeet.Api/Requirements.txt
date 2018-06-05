@@ -1,0 +1,21 @@
+﻿# Requirements
+
+## User story (requirement)
+
+As a conference organizer
+	I want to search for available speakers
+	So that I may contact them about my conference
+
+## Gherkin (test cases)
+
+Given I am a conference organizer
+	And Given a speaker in mind
+	When I search for speakers by name
+	Then I receive speakers with a matching first name
+
+Given I am a conference organizer
+	And Given a speaker in mind
+	When I search for speakers by name
+	Then I receive speakrs with a matching last name
+
+Note: "matching" means starts-with
