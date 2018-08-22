@@ -2,20 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using SpeakerMeet.Services;
+using SpeakerMeet.Services.Speakers;
 
 namespace SpeakerMeet.API
 {
     public class SpeakerController : Controller
     {
+        private ISpeakerService _speakerService;
+
+        public SpeakerController(ISpeakerService speakerService1)
+        {
+            _speakerService = speakerService1;
+        }
+
         public IActionResult Search(string searchString)
         {
-            var speakers = GetSpeakers();
+            var speakers =_speakerService.Search(searchString);
 
-            var filteredSpeakers = FilterSpeakers(searchString, speakers);
-
-            if (filteredSpeakers.Any())
+            if (speakers.Any())
             {
-                return Ok(filteredSpeakers);
+                return Ok(speakers);
             }
 
             return Ok(new List<Speaker>());
@@ -27,25 +34,9 @@ namespace SpeakerMeet.API
             return filteredSpeakers;
         }
 
-        private static List<Speaker> GetSpeakers()
+        public void GetAll()
         {
-            var speakers = new List<Speaker>()
-            {
-                new Speaker("Joshua"),
-                new Speaker("Josh"),
-                new Speaker("Joseph")
-            };
-            return speakers;
+            
         }
-    }
-
-    public class Speaker
-    {
-        public Speaker(string name)
-        {
-            Name = name;
-        }
-
-        public string Name { get; }
     }
 }
